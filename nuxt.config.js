@@ -1,4 +1,8 @@
 export default {
     ssr: false,
-    srcDir: 'src'
+    target: 'static',
+    srcDir: 'src',
+    generate: {
+      dir: 'app'
+    },
 }
