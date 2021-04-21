@@ -13,4 +13,8 @@ export default {
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       ],
     },
+    css: [
+      'uikit/dist/css/uikit.min.css',
+      // 'vuesax/dist/vuesax.css'
+    ],
 }

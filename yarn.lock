@@ -7352,6 +7352,11 @@ uglify-js@^3.5.1:
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.12.5.tgz#83241496087c640efe9dfc934832e71725aba008"
   integrity sha512-SgpgScL4T7Hj/w/GexjnBHi3Ien9WS1Rpfg5y91WXMj9SY997ZCQU76mH4TpLwwfmMvoOU8wiaRkIf6NaH3mtg==
 
+uikit@^3.6.19:
+  version "3.6.19"
+  resolved "https://registry.yarnpkg.com/uikit/-/uikit-3.6.19.tgz#ae39e191523b19a311ebc2f05b8b7334360e806e"
+  integrity sha512-Lw+1/3KNiYcZlWCVhva1/kN/GtjRzMt4vt8Cj73uZ66qDK7l68/ppFScArooPARnieVJG3CDbkq2UMV0YnXhnQ==
+
 unfetch@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/unfetch/-/unfetch-4.2.0.tgz#7e21b0ef7d363d8d9af0fb929a5555f6ef97a3be"
