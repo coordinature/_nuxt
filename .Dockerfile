@@ -1,18 +1,20 @@
-FROM node:10
+FROM node:10.16.0-alpine
 
 # Create app directory
-WORKDIR /tm
-ADD . /tm/
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-# global install & update
-RUN npm i -g npm && npm i -g yarn
+# Install app dependencies
+RUN apk update && apk upgrade && apk add git
 
-RUN rm yarn.lock
-RUN yarn
-RUN yarn build
+ONBUILD COPY . /usr/src/app/
+ONBUILD RUN npm install
+
+# Build app
+ONBUILD RUN npm run build
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
 
 # start command
-CMD [ "yarn", "start" ]
+CMD [ "npm", "start"]
