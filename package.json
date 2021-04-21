@@ -13,7 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "nuxt": "^2.14.12",
-    "uikit": "^3.6.19"
+    "uikit": "^3.6.19",
+    "vuesax": "^3.12.2"
   },
   "devDependencies": {
     "pug": "^3.0.0",
