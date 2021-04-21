@@ -8,13 +8,13 @@ WORKDIR /usr/src/dashboard
 RUN apk update && apk upgrade && apk add git
 
 ONBUILD COPY . /usr/src/app/dashboard
-ONBUILD RUN npm install
+ONBUILD RUN yarn
 
 # Build app
-ONBUILD RUN npm run generate
+ONBUILD RUN yarn generate
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
 
 # start command
-CMD [ "npm", "start"]
+CMD [ "yarn", "start"]
