@@ -3,6 +3,6 @@ export default {
     target: 'static',
     srcDir: 'src',
     generate: {
-      dir: 'app'
+      dir: 'www'
     },
 }
