@@ -25,4 +25,4 @@ jobs:
         REPO: git@github.com:thismedium/tm-nuxt-html.git
         BRANCH: main
         FOLDER: app
-        SSH_PRIVATE_KEY: ${{ secrets.TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
