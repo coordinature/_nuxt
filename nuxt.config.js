@@ -14,10 +14,10 @@ export default {
       ],
     },
     css: [
-      // 'uikit/dist/css/uikit.min.css',
+      'uikit/dist/css/uikit.min.css',
       // 'vuesax/dist/vuesax.css'
     ],
     plugins: [
-      { src: '~/plugins/uikit', mode: 'client' },
+      { src: '~/plugins/uikit' , mode: 'client' },
     ]
 }
