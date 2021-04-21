@@ -1,6 +1,6 @@
 <template lang="pug">
  .uk-height-viewport.uk-flex.uk-flex-middle.uk-flex-center 
-    button.uk-button.uk-button-default.uk-border-pill Thismedium.com
+    button.uk-button.uk-button-default.uk-border-pill  {{ hostname }}
     
 </template>
 <script>
@@ -11,6 +11,14 @@ export default {
                 {rel:"stylesheet", href: 'https://cdn.jsdelivr.net/npm/uikit@3.6.13/dist/css/uikit.min.css'}
             ]
         }
+    },
+    data() {
+        return {
+            hostname: null
+        }
+    },
+    mounted() {
+        this.hostname = window.location.hostname
     }
 }
 </script>

@@ -2,7 +2,7 @@
   {
     "name": "index",
     "path": "/",
-    "component": "/Users/elisemarcus/Documents/thismedium/assets/logic.to/tm/pages/index.vue",
+    "component": "/Users/neuorigins/GitHub/tm/accounts/tm/tm-nuxt/pages/index.vue",
     "chunkName": "pages/index"
   }
 ]
