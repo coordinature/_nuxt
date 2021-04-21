@@ -19,6 +19,6 @@ export default {
     ],
     plugins: [
       // { src: '~/plugins/uikit' , mode: 'client' },
-      { src: '~/plugins/vuesax' , mode: 'client' },
+      // { src: '~/plugins/vuesax' , mode: 'client' },
     ]
 }
