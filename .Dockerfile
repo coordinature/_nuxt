@@ -1,17 +1,15 @@
 FROM node:10.16.0-alpine
 
 # Create app directory
-RUN mkdir -p /usr/src/dashboard
-WORKDIR /usr/src/dashboard
+WORKDIR /
+ADD . /app/
 
 # Install app dependencies
 RUN apk update && apk upgrade && apk add git
-
-ONBUILD COPY . /usr/src/app/dashboard
-ONBUILD RUN yarn
+RUN yarn install
 
 # Build app
-ONBUILD RUN yarn generate
+RUN yarn generate
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
