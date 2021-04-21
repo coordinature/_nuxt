@@ -1,5 +1,5 @@
 export default {
-    ssr: false,
+    ssr: false, 
     target: 'static',
     srcDir: 'src',
     generate: {
