@@ -17,4 +17,7 @@ export default {
       // 'uikit/dist/css/uikit.min.css',
       // 'vuesax/dist/vuesax.css'
     ],
+    plugins: [
+      { src: '~/plugins/uikit', mode: 'client' },
+    ]
 }
