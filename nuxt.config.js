@@ -1,9 +1,6 @@
 export default {
     // ssr: false, 
     // target: 'static',
-    env: {
-      MONGODB_URI: `mongodb+srv://www:e8c52d462201f05a61adbe735f27fdc7@www.thismedium.com/www?retryWrites=true`
-    },
     srcDir: 'src',
     head: {
       title: 'nuxt',
