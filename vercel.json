@@ -1,5 +1,9 @@
 {
+  "name": "tm-nuxt-api",
   "version": 2,
+  "env": {
+    "MONGODB_URI": "@mongo-uri"
+  },
   "builds": [
     {
       "src": "nuxt.config.js",
