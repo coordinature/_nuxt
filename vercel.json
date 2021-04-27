@@ -5,5 +5,8 @@
       "src": "nuxt.config.js",
       "use": "@nuxtjs/vercel-builder"
     }
-  ]
+  ],
+  "env": {
+    "MONGODB_URI": "MONGODB_URI"
+  }
 }
