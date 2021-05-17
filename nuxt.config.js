@@ -23,11 +23,11 @@ export default {
       // { src: '~/plugins/vuesax' , mode: 'client' },
     ],
     modules: ['@nuxtjs/axios', '@nuxtjs/auth'],
-    serverMiddleware: [
+    /* serverMiddleware: [
       // API middleware
       // {path: '/api', handler: '~~/api/index.js'}
       
-    ],
+    ], */
     auth: {
       strategies: {
       local: {
