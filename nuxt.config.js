@@ -24,7 +24,7 @@ export default {
     modules: ['@nuxtjs/axios', '@nuxtjs/auth'],
     serverMiddleware: [
       // API middleware
-      {path: '/api', handler: '~~/api/index.js'}
+      // {path: '/api', handler: '~~/api/index.js'}
       
     ],
     auth: {
