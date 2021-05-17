@@ -1,6 +1,7 @@
 export default {
     // ssr: false, 
     // target: 'static',
+    components: true,
     srcDir: 'src',
     head: {
       title: 'nuxt',
