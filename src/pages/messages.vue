@@ -1,3 +1,3 @@
 <template lang="pug">
-inbox
+inbox.uk-height-viewport
 </template>
