@@ -13,6 +13,9 @@ export default {
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       ],
+      script: [
+        { src: 'https://cdn.talkjs.com/talk.js' }
+      ]
     },
     css: [
       // 'uikit/dist/css/uikit.min.css',
