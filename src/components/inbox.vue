@@ -6,7 +6,10 @@
         .uk-card.uk-card-small.uk-card-default
             .uk-card-header
                 span.uk-text-small hello
-            .uk-card-body hello body
+            .uk-card-body 
+                input(placeholder="New Conversation").uk-input
+            .uk-card-footer
+                button(@click="addConversation") Add Chat
 </template>
 <script>
 import Talk from "talkjs";
@@ -15,6 +18,15 @@ export default {
     name: 'Inbox',
 
     props: {
+        addConversation: {
+            type: Function,
+            //required: true,
+            default: function() {
+                return () => {
+                    console.log('added conversation')
+                }
+            }
+        },
         currentUser: {
             type: Object,
             //required: true,
@@ -28,12 +40,13 @@ export default {
                     role: "Initiator"
                 }
             }
-        }
+        },
     },
 
     data() {
         return {
-            user: [],
+            user: {},
+            conversation: {},
             contacts: []
         }
     },
@@ -72,6 +85,8 @@ export default {
     },
 
     methods: {
+        
+
         initConversation(user, contacts, conversationId) {
             Talk.ready.then(function() {
                 var me = new Talk.User(user);

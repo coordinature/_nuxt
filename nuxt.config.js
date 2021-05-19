@@ -22,6 +22,7 @@ export default {
       // 'vuesax/dist/vuesax.css'
     ],
     plugins: [
+      { src: '~/plugins/graph' , mode: 'client' },
       { src: '~/plugins/uikit' , mode: 'client' },
       // { src: '~/plugins/vuesax' , mode: 'client' },
     ],
