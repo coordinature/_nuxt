@@ -5,6 +5,6 @@ import VueGun from 'vue-gun';
 Vue.use(VueGun, {
     peers: [
         // 'http://localhost:8080/gun',
-        'http://188.166.125.234/gun',
+        'https://188.166.125.234/gun',
     ]
 });
