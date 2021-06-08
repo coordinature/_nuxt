@@ -1,0 +1,4 @@
+property,"type","required",
+title,"text"," true",
+description,"textarea","true",
+images,"image","true",
