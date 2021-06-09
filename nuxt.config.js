@@ -22,13 +22,14 @@ export default {
       // 'vuesax/dist/vuesax.css'
     ],
     plugins: [
+      { src: '~/plugins/graph' , mode: 'client' },
       { src: '~/plugins/uikit' , mode: 'client' },
       // { src: '~/plugins/vuesax' , mode: 'client' },
     ],
     modules: ['@nuxtjs/axios', '@nuxtjs/auth'],
     /* serverMiddleware: [
       // API middleware
-      {path: '/api', handler: '~~/api/index.js'}
+      // {path: '/api', handler: '~~/api/index.js'}
       
     ], */
     auth: {
