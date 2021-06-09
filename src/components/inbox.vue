@@ -5,15 +5,11 @@
     .uk-panel.uk-width-medium.uk-background-muted.uk-padding-small
         .uk-card.uk-card-small.uk-card-default
             .uk-card-header
-                span.uk-text-small hello
-<<<<<<< HEAD
-            .uk-card-body hello body
-=======
+                span.uk-text-small Signs Assistant
             .uk-card-body 
                 input(placeholder="New Conversation").uk-input
             .uk-card-footer
                 button(@click="addConversation") Add Chat
->>>>>>> e0dbfb51280004d1971e2bdf13ca8e625aec599d
 </template>
 <script>
 import Talk from "talkjs";
@@ -22,8 +18,6 @@ export default {
     name: 'Inbox',
 
     props: {
-<<<<<<< HEAD
-=======
         addConversation: {
             type: Function,
             //required: true,
@@ -33,7 +27,6 @@ export default {
                 }
             }
         },
->>>>>>> e0dbfb51280004d1971e2bdf13ca8e625aec599d
         currentUser: {
             type: Object,
             //required: true,
@@ -47,21 +40,13 @@ export default {
                     role: "Initiator"
                 }
             }
-<<<<<<< HEAD
         }
-=======
-        },
->>>>>>> e0dbfb51280004d1971e2bdf13ca8e625aec599d
     },
 
     data() {
         return {
-<<<<<<< HEAD
-            user: [],
-=======
             user: {},
             conversation: {},
->>>>>>> e0dbfb51280004d1971e2bdf13ca8e625aec599d
             contacts: []
         }
     },
@@ -100,11 +85,7 @@ export default {
     },
 
     methods: {
-<<<<<<< HEAD
-=======
-        
 
->>>>>>> e0dbfb51280004d1971e2bdf13ca8e625aec599d
         initConversation(user, contacts, conversationId) {
             Talk.ready.then(function() {
                 var me = new Talk.User(user);
