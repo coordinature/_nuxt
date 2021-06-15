@@ -1,7 +1,7 @@
 <template lang="pug">
-// .uk-background-muted
+.uk-background-muted
     .uk-container.uk-height-viewport
-        // .uk-flex.uk-flex-between
+        .uk-flex.uk-flex-between
             ul.uk-breadcrumb.uk-text-meta.uk-margin-top
                 li(v-for="(part, partIndex) in $route.name.split('-')")
                     template(v-if="part === 'document'")
@@ -19,16 +19,16 @@
                         span( :uk-icon="editable ? 'check' : 'cloud-upload'" )
                         span.uk-margin-small-left.uk-text-capitalize update
                 li
-                    a( :uk-icon="assistance ? 'play' : 'play-circle'" @click="assistance = !assistance") 
+                    a( :uk-icon="toggle.assistance ? 'play' : 'play-circle'" @click="toggle.assistance = !toggle.assistance") 
                 li
-                    a( :uk-icon="viewable ? 'info' : 'question'" @click="viewable = !viewable")
-        // .uk-flex
+                    a( :uk-icon="toggle.viewable ? 'info' : 'question'" @click="toggle.viewable = !toggle.viewable")
+        .uk-flex
             .uk-panel.uk-width-medium
                 
-                to-list(:items="content" :path="'/works'").uk-list.uk-list-collapse
+                list(:items="values" :path="'/works'").uk-list.uk-list-collapse
             nuxt.uk-card.uk-card-small
-to-template
-    to-list( :items="$router.options.routes" )
+// to-template
+    // to-list( :items="$router.options.routes" )
     to-panel
     nuxt
 </template>

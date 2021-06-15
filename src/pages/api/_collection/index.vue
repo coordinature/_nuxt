@@ -1,136 +1,330 @@
 <template lang="pug">
-div
-    .uk-section-small.uk-section-default
-        .uk-panel.uk-container
-            span.uk-text-meta {{ $route.name }}
-            h1.uk-h1 {{ $route.params.collection + " form" }}
-            tm-form(
-                :entity="model"
-                @submit="doc=> addCollection($route.params.collection, doc)"
-            )
+// .uk-flex.uk-grid
+        panel( uk-height-viewport="offset-top: true" )
+            .uk-width-medium
+                h2 {{ $route.params.collection }}
+                list(:items="items").uk-text-meta.uk-list
+        // panel
+div.uk-flex.uk-flex-center
+    // .uk-container
+        .uk-width-medium
+                h2 {{ $route.params.collection }}
+                list(:items="items").uk-text-meta.uk-list
+    .uk-container
+        .uk-flex.uk-flex-between
+            ul.uk-breadcrumb.uk-text-meta.uk-margin-top.uk-margin-small-left
+                li(v-for="part in $route.name.split('-')")
+                    template(v-if="part === 'document'")
+                        n-link(v-if="answers.title" to="") {{  answers.title.toLowerCase().split(' ').join('-')  }}
+                        n-link(v-else to="") {{  $route.params[part] }}
+                        n-link(v-else to="") {{  hash }}
+                    template(v-else)
+                        n-link(to="") {{ $route.params[part] }}
+            ul.uk-iconnav.uk-margin-top
+                
+                li
+                    a( :uk-icon="editable ? 'check' : 'pencil'" @click="editable = !editable")
+                
+                li
+                    a( :uk-icon="assistance ? 'play' : 'play-circle'" @click="assistance = !assistance") 
+                li
+                    a( :uk-icon="viewable ? 'info' : 'question'" @click="viewable = !viewable")
+        template(v-show="hash")
+            .uk-flex.uk-grid.uk-grid-small
+                .uk-panel.uk-width-expand
+                    to-display(:node="hash")
 
-    .uk-section-small.uk-section-muted
-        .uk-panel.uk-container
-          list(:items="items")
+                .uk-panel.uk-width-medium
+                        // hr.uk-divider-veritcal
+                        .uk-panel(v-if="viewable")
+                            to-card-form(
+                                :class="'uk-card-body uk-card-small uk-card-default'"
+                                :answers="answers"
+                                :questions="questions"
+                                :callback="handleAnswer"
+                                :assistance="assistance" )
+                            .uk-panel(v-if="keys.length > 0")
+                                button( @click="checkAnswers").uk-button.uk-button-default.uk-icon.uk-flex.uk-flex-middle
+                                    span( :uk-icon="editable ? 'check' : 'cloud-upload'" )
+                                    span.uk-margin-small-left.uk-text-capitalize update
+                        .uk-panel
+                            .uk-placeholder.uk-padding-small
+                                to-card-display(:content="answers" :order="keys")
+            // hr
+            
+            // to-checkable-list(v-if="tags.length > 0" :items="tags")
+            // hr(v-if="tags.length > 0").uk-divider-small
+            // to-checkable-item(text="add new text" :disabled="false")
+        
+
 </template>
+<style scoped>
+.uk-card-small .uk-card-body, .uk-card-small.uk-card-body {
+    padding: 10px 10px;
+}
+
+.uk-button.uk-icon {
+    margin-top: -10px
+}
+
+.tm-list-padding {
+    padding: 8px
+}
+
+.uk-breadcrumb>:nth-child(n+2):not(.uk-first-column)::before {
+    content: "/";
+    display: inline-block;
+    margin: 0 10px 0 calc(12px - 4px);
+    font-size: .875rem;
+    color: #999;
+}
+</style>
 <script>
-import UIkit from 'uikit'
-
-const collections = {
-    works:   {
-        title:  String, 
+const mini = {
+    traces: [
+                {
+                    question: 'What are you grateful for?',
+                    // starter: 'Today, I am greatful for',
+                    type: 'text'
+                },
+                {
+                    question: 'Why?',
+                    // starter: 'I am greatful because',
+                    type: 'text',
+                },
+                {
+                    question: 'Tell the story.',
+                    // starter: 'Once, ',
+                    type: 'text',
+                    lines: 6
+                }
+    ],
+    works: {
+        title: {
+            type: 'text',
+            label: 'title',
+            question: "What is the title of this list?",
+            default: ''
+        },
+        description: {
+            type: 'text',
+            label: 'description',
+            question: "What is the description of this list?",
+            default: ''
+        },
+        caption: {
+            type: 'text',
+            label: 'caption',
+            question: "What is the caption of this list?",
+            default: ''
+        },
+        items: {
+            type: 'list',
+            label: 'items',
+            question: "What items do you want to include in this list?",
+            default: []
+        }
     }
 }
-
-const examples = {
-    works:   {
-        title: "Categories",
-        description: "A description of this collection category.",
-        imageUrl: 'https://via.placeholder.com/185x140'
-    }
-}
-
 export default {
-    layout: 'developer',
-    
+
     data() {
         return {
-            model: {},
-            graph: {},
-            items: {},
-            list: []
+
+            active: 0,
+            questions: mini.works,
+            editable: false,
+            assistance: false,
+            viewable: true,
+            answers: {},
+            keys: [],
+            newTags: [],
+            items: []
         }
     },
-    mounted() {
-       
 
-        this.graph = this.$gun.get(this.$route.params.collection)
-        this.graph.map().on((object, id) => {
+    async fetch() {
 
-            // Get unique names
-            const keys = Object.keys(object._['>'])
+        const name = this.$route.name
+        const names = this.$route.name.split('-')
+        const point = this.$route.params[this.$route.name]
+        const branch = name.split('-')[name.split('-').length - 1]
+        const branchValue = this.$route.params[branch]
+        const nodePath = name + "/" + point
+        const pathGen = names.map(name => {
+            return this.$route.params[name]
+        }).join('/')
 
-            // Loop through each key and create a place for it, then select, only the object
-            // needed from the general object which we had in the first place.
+        let path
+        pathGen.length ? path = pathGen : path = this.$route.fullPath
+        console.log(branchValue)
+        this.$gun.get(this.$route.params.collection).on((node0, key0) => {
+            console.log(node0)
+            this.items = [ ...this.items, { ...node0, slug: node0.name, path: node0.name, key: key0 } ]
+            // add results straight to the Vue component state
+            // and get updates when nodes are updated by GUN
+            /* this.$gun.get(key0).on((node1, key1) => {
+                console.log(key0)
+                
+                console.log(node1)
+            }) */
 
-            keys.map(key => {
-                const path = object[key]['#']
-                this.$gun.get(path).once(node => {
-                    this.items[key] = {}
-                    this.items[key] = node
-                })
-            })
-        })
-
-        this.model = examples[this.$route.params.collection]
-
-        
-
-        
-    
-        /* folds.set({
-            slug: this.createSlug(item.title + ' draft'),
-            title: item.title + ' draft'
-        }) */
-
-        this.getList('works/paintings/folds')
+        });
     },
-    methods: {
-        log(message) {
-            console.log(Date.now() + ":", message)
-        },
-        slugify(input) {
-            return input.toLowerCase().split(' ').join('-')
-        },
-        removeList(path) {
-            this.$gun.get(path).put({})
-        },
-        removeItem(path) {
-            const id = path.split('/')[ path.split('/').length - 1 ]
-            this.$gun.get(this.path).get(id).put(null)
-            console.log('deleted:', path)
-        },
-        getItem(path) {
-            this.$gun.get(path).once(node => {
-                this.list.push(node)
-            })
-        },
-        getList(path) {
-            let list, object
-            object = this.$gun.get(path)._.root.graph[path]
-            object ? list = Object.values(object).splice(1) : null
-            list && list.forEach(item => { 
-                item ? this.getItem(item['#']) : console.log("Reference deleted")
+/* 
+    async asyncData ({$content, $route}) {
+        // const pages = await $content('').without(['body']).fetch()
+
+        console.log(context)
+        const name = $route.name
+        const names = $route.name.split('-')
+        const point = $route.params[$route.name]
+        const nodePath = name + "/" + point
+        const pathGen = names.map(name => {
+            return this.$route.params[name]
+        }).join('/')
+
+        console.log()
+
+        let path, items = []
+        pathGen.length ? path = pathGen : path = $route.fullPath
+        this.$gun.get(path).map().on((node0, key0) => {
+            console.log(node0)
+            items = [ items, { ...node0, slug: node0.name, path: node0.name, key: key0 } ]
+            // add results straight to the Vue component state
+            // and get updates when nodes are updated by GUN
+             this.$gun.get(key0).on((node1, key1) => {
+                console.log(key0)
+                
+                console.log(node1)
             }) 
 
-            /* list.once().map().once(list => {
-                console.log(list)
-            }) */
-            // list.map().once()
+        });
+
+        return {
+            pages
+        }
+    },  */
+
+
+
+    methods: {
+
+        handleItemSelection() {
+            console.log('selected')
         },
-        addItem(path, item) {
+        handleAnswer(key, value) {
+            // console.log(key, value)
+            // this.answers.push(i)
+            const attribute = {[key]: value}
+            this.answers = {
+                ...this.answers,
+                ...attribute,
+            }
 
-            this.$gun.get(path).put({
-                [this.createSlug(item.title)]: item
-            })
+            this.keys = Object.keys(this.answers)
+            
 
-            console.log('item added at:', path)
+            if ( this.active >= this.questions.length ) {
+                console.log('there are no more questions')
+            } else {
+                this.active++
+            }
         },
-
-        addCollection(path, subCollection) {
-            const collection = this.$gun.get(path).get('items')
-            collection.get( this.slugify(subCollection.title) ).put({
-                slug: this.slugify(subCollection.title),
-                ...subCollection
+        findNouns(list) {
+            const nlp = require('compromise').default
+            const doc = nlp(list)
+            return doc.nouns().json()
+        },
+        createTag() {
+            this.newTags.push({
+                text: '',
             })
+        },
+        checkAnswers() {
+
+            let filter = []
+
+            Object.keys(this.$route.params).forEach(key => {
+                if(key !== 'content') {
+                    filter.push(this.$route.params[key])
+                } 
+            })
+            
+            const slug = this.answers.title.toLowerCase().split(' ').join('-')
+
+            let submission = {
+                name: slug,
+                index: this.keys.join(':'),
+                title: this.answers.title,
+                description: this.answers.description
+            }
+
+            
+
+            const collection = this.$route.params.collection
+            const _collector=this.$gun.get(collection)
+
+            console.log(submission,  collection, _collector)
+
+
+            this.$gun.get(collection).set({
+                ...submission,
+             },(e) => {
+
+                 if(e.err) {
+                    console.log(Date.now(), e)
+                 } else {
+                    const seed = e['$']['_']
+                    const graph = seed.graph
+                    
+                    const keys = Object.keys(graph)
+                    const lastKey = keys[keys.length - 1]
+                    console.log(lastKey, this.hash)
+
+                    if(lastKey.split('/').length === 2) {
+                        this.answers.items.map(item => {
+                            this.$gun.get(lastKey).get('items').set({
+                                caption: item.caption,
+                                data: item.data
+                            })
+                        })
+                    }
+                    
+                 }
+                 
+             })
+            
+
+            let items = {}
+            // this.answers.items
+            // this.$gun.get('item')
+
+            /* if(Array.isArray(this.answers.items)) {
+                this.answers.items.map(item => {
+                    this.$gun.get('item').set(item)
+                })
+            } */
+
+
+             
+
+            
         }
     },
-    watch: {
-        items(newItems) {
-            const values = Object.values(newItems)
-            console.log(values)
-        }
-    }
 
+    computed: {
+        hash() {
+            const hash = this.$store.state.index[this.$route.path]
+            return hash
+        },  
+        tags() {
+            const statements = this.answers
+            const tags = this.findNouns(statements).map(tag => tag.normal)
+            return tags
+        }
+    },
+
+    
 }
 </script>

@@ -1,14 +1,18 @@
 <template lang="pug">
-.uk-flex.uk-grid
+// .uk-flex.uk-grid
         panel( uk-height-viewport="offset-top: true" )
             .uk-width-medium
                 h2 {{ $route.params.collection }}
                 list(:items="items").uk-text-meta.uk-list
         // panel
-// div.uk-flex.uk-flex-center
+div.uk-flex.uk-flex-center
+    // .uk-container
+        .uk-width-medium
+                h2 {{ $route.params.collection }}
+                list(:items="items").uk-text-meta.uk-list
     .uk-container
-        // .uk-flex.uk-flex-between
-            // ul.uk-breadcrumb.uk-text-meta.uk-margin-top.uk-margin-small-left
+        .uk-flex.uk-flex-between
+            ul.uk-breadcrumb.uk-text-meta.uk-margin-top.uk-margin-small-left
                 li(v-for="part in $route.name.split('-')")
                     template(v-if="part === 'document'")
                         n-link(v-if="answers.title" to="") {{  answers.title.toLowerCase().split(' ').join('-')  }}
@@ -18,12 +22,12 @@
                         n-link(to="") {{ $route.params[part] }}
             ul.uk-iconnav.uk-margin-top
                 
-                // li
+                li
                     a( :uk-icon="editable ? 'check' : 'pencil'" @click="editable = !editable")
                 
-                // li
+                li
                     a( :uk-icon="assistance ? 'play' : 'play-circle'" @click="assistance = !assistance") 
-                // li
+                li
                     a( :uk-icon="viewable ? 'info' : 'question'" @click="viewable = !viewable")
         template(v-show="hash")
             .uk-flex.uk-grid.uk-grid-small
@@ -106,6 +110,12 @@ const mini = {
             type: 'text',
             label: 'description',
             question: "What is the description of this list?",
+            default: ''
+        },
+        caption: {
+            type: 'text',
+            label: 'caption',
+            question: "What is the caption of this list?",
             default: ''
         },
         items: {
