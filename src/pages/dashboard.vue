@@ -1,46 +1,36 @@
 <template lang="pug">
 .uk-text-center(uk-grid='')
   .div(class='uk-width-expand')
-    //.uk-card.uk-card-default.uk-card-body
-    nav.uk-navbar-container(uk-navbar='')
-            .uk-navbar-left
-                .uk-navbar-item
-                    form.uk-search.uk-search-navbar
-                        span(uk-search-icon='')
-                        input.uk-search-input(type='search' placeholder='Search')
+    tmsearch
     .uk-card.uk-card-default
-        div.uk-flex.uk-flex-center
-            div.uk-margin-right
-                select.uk-select
-                    option Option 01
-                    option Option 02
-            div.uk-margin-right
-                select.uk-select
-                    option Option 01
-                    option Option 02
-            div
-                select.uk-select
-                    option Option 01
-                    option Option 02
+        tmselectinput
     .uk-card.uk-card-primary text
-    .uk-card.uk-card-default
+    .uk-card.uk-card-default.uk-padding
         ul.uk-grid-small.uk-child-width-1-2(class='uk-child-width-1-3@s' uk-sortable='handle: .uk-card' uk-grid='')
             li
                 tmcard
             li
-                .uk-card.uk-card-default.uk-card-body.uk-text-center Item 3
+                tmcard
             li
-                .uk-card.uk-card-default.uk-card-body.uk-text-center Item 4
+                tmcard
             li
-                .uk-card.uk-card-default.uk-card-body.uk-text-center Item 5
+                tmcard
             li
-                .uk-card.uk-card-default.uk-card-body.uk-text-center Item 6
+                tmcard
             li
-                .uk-card.uk-card-default.uk-card-body.uk-text-center Item 7
+                tmcard
 
 
   .div(class='uk-width-1-3')
-    .uk-card.uk-card-default.uk-card-body 1-3
+    .uk-card.uk-card-default.uk-card-body
+        .uk-card-header
+            tmtab
+            .uk-card-title.uk-text-left 27 results 
+            p.uk-text-left gestures in Rotterdam with tags:
+        .uk-card-body.uk-text-left
+            tmlist
+        .uk-card-footer.uk-padding-small
+            .uk-button.uk-button-default see full report
 
 
 </template>
