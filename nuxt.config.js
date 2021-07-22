@@ -1,6 +1,9 @@
 export default {
     ssr: false, 
     target: 'static',
+    server: { 
+      host: '0.0.0.0'
+     },
     components: true,
     srcDir: 'src',
     head: {
@@ -27,12 +30,16 @@ export default {
       // { src: '~/plugins/vuesax' , mode: 'client' },
     ],
     modules: ['@nuxtjs/axios', '@nuxtjs/auth'],
-    /* serverMiddleware: [
+    /* 
+
+    serverMiddleware: [
       // API middleware
       // {path: '/api', handler: '~~/api/index.js'}
       
-    ], */
-    auth: {
+    ], 
+
+    */
+    /*auth: {
       strategies: {
       local: {
         endpoints: {
@@ -59,5 +66,5 @@ export default {
         home: '/' // User will be redirect to this path after login if accessed login page directly
       },
       rewriteRedirects: true,
-  },
+  },*/
 }
