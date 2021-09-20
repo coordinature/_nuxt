@@ -9,7 +9,7 @@
     .uk-card.uk-card-default.uk-padding
         ul.uk-grid-small.uk-child-width-1-2(class='uk-child-width-1-3@s' uk-sortable='handle: .uk-card' uk-grid='')
             li
-                tm-card
+                simulation
             li
                 tm-card
             li

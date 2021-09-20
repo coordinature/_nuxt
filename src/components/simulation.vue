@@ -26,7 +26,7 @@ export default {
         } catch (e) {}
     },
     methods: {
-        runProton() {
+      runProton() {
             const scene = document.getElementById('pulse');
             const proton = new Proton();
             const emitter = new Proton.Emitter();
@@ -57,14 +57,15 @@ export default {
             //add renderer
             proton.addRender(new Proton.SpriteRender(scene));
       },
+
       createProton(canvas) {
         const proton = new Proton();
 
         const emitter = new Proton.Emitter();
         //setRate
         emitter.rate = new Proton.Rate(
-        new Proton.Span(2, 8),
-        new Proton.Span(0.01)
+          new Proton.Span(2, 8),
+          new Proton.Span(0.01)
         );
         //addInitialize
         emitter.addInitialize(new Proton.Position(new Proton.PointZone(0, 0)));
@@ -79,19 +80,18 @@ export default {
         emitter.addBehaviour(new Proton.Alpha(1, 0));
         emitter.addBehaviour(new Proton.Scale(0.1, 1.3));
         emitter.addBehaviour(new Proton.RandomDrift(3, 3, 0.05));
-        const color1 = Color.parse(
-        `hsl(${this.hcolor % 360}, 100%, 50%)`
-        ).hexTriplet();
-        const color2 = Color.parse(
-        `hsl(${(this.hcolor + 50) % 360}, 100%, 50%)`
-        ).hexTriplet();
+
+
+        const color1 = Color.parse( `hsl(${this.hcolor % 360}, 100%, 50%)` ).hexTriplet();
+        const color2 = Color.parse(  `hsl(${(this.hcolor + 50) % 360}, 100%, 50%)` ).hexTriplet();
+
         const colorBehaviour = new Proton.Color(color1, color2);
         emitter.addBehaviour(colorBehaviour);
         emitter.addBehaviour(
-        new Proton.CrossZone(
-            new Proton.RectZone(0, 0, canvas.width, canvas.height),
-            "collision"
-        )
+          new Proton.CrossZone(
+              new Proton.RectZone(0, 0, canvas.width, canvas.height),
+              "collision"
+          )
         );
 
         emitter.p.x = canvas.width / 2;
@@ -108,43 +108,45 @@ export default {
         this.emitter = emitter;
         this.renderer = renderer;
         this.colorBehaviour = colorBehaviour;
-  },
+      },
 
-  handleCanvasInited(canvas) {
-    this.canvas = canvas;
-    this.createProton(canvas);
-    RAFManager.add(this.renderProton);
-  },
+      handleCanvasInited(canvas) {
+      this.canvas = canvas;
+      this.createProton(canvas);
+      RAFManager.add(this.renderProton);
+      },
 
-  handleResize(width, height) {
-    this.renderer.resize(width, height);
-  },
+      handleResize(width, height) {
+      this.renderer.resize(width, height);
+      },
 
-  emitterRunning() {
-    this.tha += Math.PI / 200;
-    const p = 400 * Math.sin(2 * this.tha);
-    this.emitter.p.x = p * Math.cos(this.tha) + this.canvas.width / 2;
-    this.emitter.p.y = p * Math.sin(this.tha) + this.canvas.height / 2;
-  },
+      emitterRunning() {
+      this.tha += Math.PI / 200;
+      const p = 400 * Math.sin(2 * this.tha);
+      this.emitter.p.x = p * Math.cos(this.tha) + this.canvas.width / 2;
+      this.emitter.p.y = p * Math.sin(this.tha) + this.canvas.height / 2;
+      },
 
-  changingColor() {
-    this.index++;
-    if (this.index % 10 === 0) {
-      this.hcolor++;
-      const color1 = Color.parse(
-        "hsl(" + (this.hcolor % 360) + ", 100%, 50%)"
-      ).hexTriplet();
-      const color2 = Color.parse(
-        "hsl(" + ((this.hcolor + 50) % 360) + ", 100%, 50%)"
-      ).hexTriplet();
-      this.colorBehaviour.reset(color1, color2);
-      this.index = 0;
-    }
-  }, renderProton() {
-    this.changingColor();
-    this.emitterRunning();
-    this.proton.update();
+      changingColor() {
+      this.index++;
+      if (this.index % 10 === 0) {
+        this.hcolor++;
+        const color1 = Color.parse(
+          "hsl(" + (this.hcolor % 360) + ", 100%, 50%)"
+        ).hexTriplet();
+        const color2 = Color.parse(
+          "hsl(" + ((this.hcolor + 50) % 360) + ", 100%, 50%)"
+        ).hexTriplet();
+        this.colorBehaviour.reset(color1, color2);
+        this.index = 0;
+      }
+      },
+    
+      renderProton() {
+      this.changingColor();
+      this.emitterRunning();
+      this.proton.update();
+      }
   }
-    }
 }
 </script>
