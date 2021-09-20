@@ -29,7 +29,7 @@ export default {
       { src: '~/plugins/uikit' , mode: 'client' },
       // { src: '~/plugins/vuesax' , mode: 'client' },
     ],
-    modules: ['@nuxtjs/axios', '@nuxtjs/auth'],
+    modules: ['@nuxtjs/axios', '@nuxtjs/auth', '@nuxt/content'],
     /* 
 
     serverMiddleware: [

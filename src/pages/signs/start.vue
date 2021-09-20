@@ -7,9 +7,9 @@
             p
             | Make expressing yourself easier and more exciting. 
             | Family Signs is replacing the keyboard with gesturing and signing.
-            | Start training your own Family gestures.
+            | Start building your own Family gestures.
             div.uk-margin-top
-                NuxtLink(to='/order')
+                NuxtLink(to='/signs/order')
                     .uk-button.uk-button-primary Pre-order
                 .uk-button.uk-button-default Enter special Test-ID
 
