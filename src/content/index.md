@@ -46,3 +46,6 @@ Early Starter, Early Adapter, Early Tester
 - Have your name listed as one of the donors.
 
 ### timelime
+- Oktober 2021 - KPN families only
+- January 2022 - Beta test for early adopters
+- March 2022 - public beta test
